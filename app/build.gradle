@@ -46,4 +46,6 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintlayout"
     implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxJava"
     implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroid"
+    implementation "androidx.cardview:cardview:$rootProject.cardview"
+    implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerview"
 }
