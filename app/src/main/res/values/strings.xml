@@ -92,4 +92,6 @@
     <string name="label_product_size">Tamanho</string>
     <string name="settings_title">Configurações</string>
     <string name="cart_title">Meu Carrinho</string>
+    <string name="cart_button_finish">FINALIZAR</string>
+    <string name="cart_label_total">Total</string>
 </resources>
