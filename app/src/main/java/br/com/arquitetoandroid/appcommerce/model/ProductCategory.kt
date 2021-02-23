@@ -1,3 +1,8 @@
 package br.com.arquitetoandroid.appcommerce.model
 
-data class ProductCategory(val id: String, val title: String)
+import java.io.Serializable
+
+data class ProductCategory(
+    val id: String,
+    val title: String,
+    val products: List<Product> = emptyList()): Serializable

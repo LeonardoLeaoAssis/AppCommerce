@@ -3,6 +3,7 @@
     <string name="title_categorias_populares">Categorias Populares</string>
     <string name="title_produtos_recentes">Produtos Recentes</string>
     <string name="title_activity_product_detail2">ProductDetailActivity2</string>
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -22,6 +23,7 @@
     <string name="menu_drawer_categorias">Categorias</string>
     <string name="menu_drawer_minhas_compras">Minhas Compras</string>
     <string name="menu_drawer_meu_carrinho">Meu Carrinho</string>
+    <string name="menu_drawer_configuracoes">Configurações</string>
     <string name="menu_drawer_sair">Sair</string>
     <string name="toogle_open">Open</string>
     <string name="toogle_close">Close</string>
@@ -52,8 +54,9 @@
     <string name="user_profile_cidade">Cidade</string>
     <string name="user_profile_cep">CEP</string>
     <string name="user_profile_atualizar">ATUALIZAR</string>
+    <string name="product_category_title">Categorias</string>
 
-    <string-array name="states" >
+    <string-array name="states">
         <item>Acre (AC)</item>
         <item>Alagoas (AL)</item>
         <item>Amapá (AP)</item>
@@ -82,4 +85,11 @@
         <item>Sergipe (SE)</item>
         <item>Tocantins (TO)</item>
     </string-array>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="product_title">Produtos</string>
+    <string name="label_product_color">Cor</string>
+    <string name="label_product_size">Tamanho</string>
+    <string name="settings_title">Configurações</string>
+    <string name="cart_title">Meu Carrinho</string>
 </resources>

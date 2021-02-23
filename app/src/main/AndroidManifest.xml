@@ -9,9 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UserProfileActivity"></activity>
+        <activity android:name=".ProductCategoryActivity"></activity>
+        <activity android:name=".UserProfileActivity" />
         <activity android:name=".UserLoginActivity" />
         <activity android:name=".UserRegisterActivity" />
+        <activity android:name=".ProductActivity" />
+        <activity android:name=".SettingsActivity" />
         <activity
             android:name=".ProductDetailActivity"
             android:label="@string/title_activity_product_detail" />
@@ -23,6 +26,18 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
+        <activity android:name=".CartActivity" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>
