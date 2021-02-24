@@ -168,7 +168,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
             R.id.nav_orders -> {
-                val intent: Intent = Intent(this, UserRegisterActivity::class.java)
+                val intent: Intent = Intent(this, OrderActivity::class.java)
                 startActivity(intent)
             }
 
