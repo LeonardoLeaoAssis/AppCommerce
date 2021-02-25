@@ -1,13 +1,17 @@
 package br.com.arquitetoandroid.appcommerce.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.io.Serializable
+import java.util.*
 
+@Entity(tableName = "PRODUCT")
 data class Product(
-    val id: String,
-    val title: String,
-    val category: ProductCategory,
+
+    @PrimaryKey val id: String = UUID.randomUUID().toString(),
+    var title: String,
+    var categoryId: String,
     var description: String,
     var price: Double,
-    var colors: List<ProductColor>,
-    var sizes: List<ProductSize>,
-    var images: List<ProductImage>): Serializable
+    var thumbnail: String,
+    var featured: Boolean): Serializable

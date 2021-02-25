@@ -53,7 +53,7 @@ class ProductDetailActivity : AppCompatActivity() {
     }
 
     private fun fillColor() {
-        val colors: List<ProductColor> = product.colors
+        val colors = emptyArray<ProductColor>()
 
         for (color in colors) {
             val chip = Chip(ContextThemeWrapper(chip_color.context, R.style.Widget_MaterialComponents_Chip_Choice))
@@ -68,7 +68,7 @@ class ProductDetailActivity : AppCompatActivity() {
     }
 
     private fun fillSize() {
-        val sizes: List<ProductSize> = product.sizes
+        val sizes = emptyArray<ProductSize>()
 
         for (size in sizes) {
             val chip = Chip(ContextThemeWrapper(chip_size.context, R.style.Widget_MaterialComponents_Chip_Choice))

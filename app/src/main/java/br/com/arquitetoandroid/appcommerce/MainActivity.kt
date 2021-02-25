@@ -2,15 +2,14 @@ package br.com.arquitetoandroid.appcommerce
 
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.MenuItem
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -20,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.arquitetoandroid.appcommerce.adapter.ProductAdapter
 import br.com.arquitetoandroid.appcommerce.adapter.ProductCategoryAdapter
 import br.com.arquitetoandroid.appcommerce.interfaces.ProductCategoryCallback
-import br.com.arquitetoandroid.appcommerce.model.*
+import br.com.arquitetoandroid.appcommerce.model.ProductCategory
 import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, ProductCategoryCallback {
@@ -65,89 +64,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         recyclerCategory = findViewById(R.id.rv_main_product_category)
 
-        val arrayCategory: List<ProductCategory> = arrayListOf<ProductCategory>(
-            ProductCategory("1", "Camisetas", fillRvProduct()),
-            ProductCategory("2", "Calças", fillRvProduct()),
-            ProductCategory("3", "Jaquetas", fillRvProduct()),
-            ProductCategory("4", "Blusas", fillRvProduct()),
-            ProductCategory("5", "Tênis", fillRvProduct())
-        )
-        val adapterCategory: ProductCategoryAdapter = ProductCategoryAdapter(arrayCategory, this)
+        val adapterCategory: ProductCategoryAdapter = ProductCategoryAdapter(emptyList(), this)
 
         recyclerCategory.adapter = adapterCategory
         recyclerCategory.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         recyclerProduct = findViewById(R.id.rv_main_product)
 
-        val adapterProduct: ProductAdapter = ProductAdapter(fillRvProduct(), this)
+        val adapterProduct: ProductAdapter = ProductAdapter(emptyList(), this)
 
         recyclerProduct.adapter = adapterProduct
         recyclerProduct.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-    }
-
-    fun fillRvProduct(): List<Product> {
-        val colors: List<ProductColor> = arrayListOf(ProductColor("1", "Vermelho", "#FF0000"),
-            ProductColor("2", "Amarelo", "#FFFF00"),
-            ProductColor("3", "Verde", "#008000"),
-            ProductColor("4", "Azul", "#0000FF"),
-            ProductColor("5", "Cinza", "#444444"))
-
-        val sizes: List<ProductSize> = arrayListOf<ProductSize>(
-            ProductSize("1", "P"),
-            ProductSize("2", "M"),
-            ProductSize("3", "G"))
-
-        val product1: Product = Product(
-            "1",
-            "Camiseta 1",
-            ProductCategory("1", "Camisetas"),
-            "Vocẽ selecionou a camiseta 1",
-            1.00,
-            colors,
-            sizes,
-            arrayListOf<ProductImage>(ProductImage("1", "xxx")))
-
-        val product2: Product = Product(
-            "2",
-            "Camiseta 2",
-            ProductCategory("1", "Camisetas"),
-            "Vocẽ selecionou a camiseta 2",
-            2.00,
-            colors,
-            sizes,
-            arrayListOf<ProductImage>(ProductImage("1", "xxx")))
-
-        val product3: Product = Product(
-            "3",
-            "Camiseta 3",
-            ProductCategory("1", "Camisetas"),
-            "Vocẽ selecionou a camiseta 3",
-            3.00,
-            colors,
-            sizes,
-            arrayListOf<ProductImage>(ProductImage("1", "xxx")))
-
-        val product4: Product = Product(
-            "4",
-            "Camiseta 4",
-            ProductCategory("1", "Camisetas"),
-            "Vocẽ selecionou a camiseta 4",
-            4.00,
-            colors,
-            sizes,
-            arrayListOf<ProductImage>(ProductImage("1", "xxx")))
-
-        val product5: Product = Product(
-            "5",
-            "Camiseta 5",
-            ProductCategory("1", "Camisetas"),
-            "Vocẽ selecionou a camiseta 5",
-            5.00,
-            colors,
-            sizes,
-            arrayListOf<ProductImage>(ProductImage("1", "xxx")))
-
-        return arrayListOf(product1, product2, product3, product4, product5)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

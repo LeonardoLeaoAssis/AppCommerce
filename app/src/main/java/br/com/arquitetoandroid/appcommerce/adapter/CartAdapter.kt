@@ -38,8 +38,8 @@ class CartAdapter(val list: List<OrderedProduct>, val context: Context): Recycle
         val orderProduct: OrderedProduct = list[position]
         holder.title.text = orderProduct.product.title
         holder.image.setImageResource(R.drawable.camiseta_mockup)
-        holder.color.text = orderProduct.product.colors[0].name
-        holder.size.text = orderProduct.product.sizes[0].size
+//        holder.color.text = orderProduct.product.colors[0].name
+//        holder.size.text = orderProduct.product.sizes[0].size
         holder.quantity.text = orderProduct.quantity.toString()
 
         holder.qtdUp.setOnClickListener {

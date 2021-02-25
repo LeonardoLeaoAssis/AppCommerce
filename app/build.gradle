@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
@@ -49,5 +50,7 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroid"
     implementation "androidx.cardview:cardview:$rootProject.cardview"
     implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerview"
-    implementation "androidx.preference:preference:$rootProject.preference"
+    implementation "androidx.preference:preference-ktx:$rootProject.preference"
+    implementation "androidx.room:room-runtime:$rootProject.room"
+    kapt "androidx.room:room-compiler:$rootProject.room"
 }
