@@ -20,6 +20,7 @@ import br.com.arquitetoandroid.appcommerce.adapter.ProductAdapter
 import br.com.arquitetoandroid.appcommerce.adapter.ProductCategoryAdapter
 import br.com.arquitetoandroid.appcommerce.interfaces.ProductCategoryCallback
 import br.com.arquitetoandroid.appcommerce.model.ProductCategory
+import br.com.arquitetoandroid.appcommerce.repository.ProductRepository
 import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, ProductCategoryCallback {
@@ -32,10 +33,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var recyclerCategory: RecyclerView
     lateinit var recyclerProduct: RecyclerView
     lateinit var imageProfile: ImageView
+    lateinit var productRepository: ProductRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        productRepository = ProductRepository(application)
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -64,14 +68,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         recyclerCategory = findViewById(R.id.rv_main_product_category)
 
-        val adapterCategory: ProductCategoryAdapter = ProductCategoryAdapter(emptyList(), this)
+        val adapterCategory: ProductCategoryAdapter = ProductCategoryAdapter(productRepository.featuredCategories, this)
 
         recyclerCategory.adapter = adapterCategory
         recyclerCategory.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         recyclerProduct = findViewById(R.id.rv_main_product)
 
-        val adapterProduct: ProductAdapter = ProductAdapter(emptyList(), this)
+        val adapterProduct: ProductAdapter = ProductAdapter(productRepository.featuredProducts, this)
 
         recyclerProduct.adapter = adapterProduct
         recyclerProduct.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)

@@ -9,8 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import br.com.arquitetoandroid.appcommerce.model.Product
-import br.com.arquitetoandroid.appcommerce.model.ProductColor
-import br.com.arquitetoandroid.appcommerce.model.ProductSize
+import br.com.arquitetoandroid.appcommerce.model.ProductVariants
+import br.com.arquitetoandroid.appcommerce.repository.ProductRepository
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 
@@ -20,13 +20,17 @@ class ProductDetailActivity : AppCompatActivity() {
     lateinit var productTitle: TextView
     lateinit var productPrice: TextView
     lateinit var productDesc: TextView
-    lateinit var product: Product
     lateinit var chip_color: ChipGroup
     lateinit var chip_size: ChipGroup
+
+    lateinit var product: Product
+    lateinit var productVariants: ProductVariants
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_detail_const)
+
+        val productRepository = ProductRepository(application)
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -35,6 +39,9 @@ class ProductDetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         product = intent.getSerializableExtra("PRODUCT") as Product
+
+        productVariants = productRepository.loadProductById(product.id)
+        product = productVariants.product
 
         productTitle = findViewById(R.id.toolbar_title)
         productTitle.text = product.title
@@ -53,7 +60,7 @@ class ProductDetailActivity : AppCompatActivity() {
     }
 
     private fun fillColor() {
-        val colors = emptyArray<ProductColor>()
+        val colors = productVariants.colors
 
         for (color in colors) {
             val chip = Chip(ContextThemeWrapper(chip_color.context, R.style.Widget_MaterialComponents_Chip_Choice))
@@ -68,7 +75,7 @@ class ProductDetailActivity : AppCompatActivity() {
     }
 
     private fun fillSize() {
-        val sizes = emptyArray<ProductSize>()
+        val sizes = productVariants.sizes
 
         for (size in sizes) {
             val chip = Chip(ContextThemeWrapper(chip_size.context, R.style.Widget_MaterialComponents_Chip_Choice))

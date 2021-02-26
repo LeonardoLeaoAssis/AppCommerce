@@ -36,4 +36,6 @@ ext {
     constraintlayout = "2.0.2"
     cardview = "1.0.0"
     recyclerview = "1.0.0"
+    preference = "1.1.1"
+    room = "2.2.5"
 }

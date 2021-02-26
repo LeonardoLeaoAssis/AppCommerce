@@ -1,12 +1,10 @@
 package br.com.arquitetoandroid.appcommerce.database.dao
 
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Transaction
-import androidx.room.Update
+import androidx.room.*
 import br.com.arquitetoandroid.appcommerce.model.Order
 import br.com.arquitetoandroid.appcommerce.model.OrderWithOrderedProduct
 
+@Dao
 interface IOrderDao {
 
     @Transaction

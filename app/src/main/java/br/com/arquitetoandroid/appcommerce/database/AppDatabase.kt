@@ -35,7 +35,7 @@ abstract class AppDatabase: RoomDatabase() {
                     "appcommerce_database")
                     .fallbackToDestructiveMigration()
                     .allowMainThreadQueries()
-                    .createFromAsset("appcommerce_databases.db")
+                    .createFromAsset("appcommerce_database.db")
                     .build()
 
                 INSTANCE = instance

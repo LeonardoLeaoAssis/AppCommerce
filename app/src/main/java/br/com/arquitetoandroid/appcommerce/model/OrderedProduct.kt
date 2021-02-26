@@ -6,10 +6,10 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 import java.util.*
 
-@Entity(tableName = "ordered_product_odp", primaryKeys = ["orderedId", "orderId"])
+@Entity(tableName = "ordered_product_odp", primaryKeys = ["orderedProductId", "orderId"])
 data class OrderedProduct(
 
-    val orderedId: String = UUID.randomUUID().toString(),
+    val orderedProductId: String = UUID.randomUUID().toString(),
     var orderId: String,
     @Embedded val product: Product,
     var quantity: Int): Serializable
