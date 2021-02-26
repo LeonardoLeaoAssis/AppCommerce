@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 import java.util.*
 
-@Entity(tableName = "PRODUCT")
+@Entity(tableName = "product_pdt")
 data class Product(
 
     @PrimaryKey val id: String = UUID.randomUUID().toString(),
@@ -14,4 +14,4 @@ data class Product(
     var description: String,
     var price: Double,
     var thumbnail: String,
-    var featured: Boolean): Serializable
+    var featured: Boolean = false): Serializable

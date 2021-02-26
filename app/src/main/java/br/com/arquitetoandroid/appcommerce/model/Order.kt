@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 import java.util.*
 
-@Entity(tableName = "ORDER")
+@Entity(tableName = "order_ord")
 data class Order(
 
     @PrimaryKey val id: String = UUID.randomUUID().toString(),

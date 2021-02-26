@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 import java.util.*
 
-@Entity(tableName = "USER")
+@Entity(tableName = "user_usr")
 data class User(
 
     @PrimaryKey val id: String = UUID.randomUUID().toString(),

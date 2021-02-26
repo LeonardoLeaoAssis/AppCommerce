@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 import java.util.*
 
-@Entity(tableName = "PRODUCT_COLOR")
+@Entity(tableName = "product_color_pdc")
 data class ProductColor(
 
     @PrimaryKey val id: String = UUID.randomUUID().toString(),

@@ -15,8 +15,6 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        val intent: Intent = Intent(this, MainActivity::class.java)
-
 //        Thread(Runnable {
 //            Thread.sleep(3000)
 //
@@ -32,7 +30,9 @@ class SplashActivity : AppCompatActivity() {
         Observable.timer(3, TimeUnit.SECONDS)
             .subscribeOn(Schedulers.newThread())
             .subscribe {
+                val intent: Intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
+
                 finish()
             }
 
