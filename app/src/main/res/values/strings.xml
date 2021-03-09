@@ -95,4 +95,14 @@
     <string name="cart_button_finish">FINALIZAR</string>
     <string name="cart_label_total">Total</string>
     <string name="order_title">Minhas Compras</string>
+    <string name="login_message">Email e/ou senha inválidos.</string>
+    <string name="user_profile_msg_sucesso">Dados atualizados com sucesso.</string>
+    <string name="user_profile_msg_nome">Preencha o campo nome.</string>
+    <string name="user_profile_msg_sobrenome">Preencha o campo sobrenome.</string>
+    <string name="user_profile_msg_email">Preencha o campo email.</string>
+    <string name="user_profile_msg_rua_avenida">Preencha o campo rua/avenida.</string>
+    <string name="user_profile_msg_numero">Preencha o campo número.</string>
+    <string name="user_profile_msg_cidade">Preencha o campo cidade.</string>
+    <string name="user_profile_msg_cep">Preencha o campo cep.</string>
+    <string name="user_profile_msg_senha">Preencha o campo senha.</string>
 </resources>

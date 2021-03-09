@@ -48,7 +48,7 @@
         android:hint="@string/user_login_senha">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txt_edit_loginpassword"
+            android:id="@+id/txt_edit_login_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword" />

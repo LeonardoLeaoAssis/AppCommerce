@@ -5,12 +5,14 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.ContextThemeWrapper
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import br.com.arquitetoandroid.appcommerce.model.Product
 import br.com.arquitetoandroid.appcommerce.model.ProductVariants
-import br.com.arquitetoandroid.appcommerce.repository.ProductRepository
+import br.com.arquitetoandroid.appcommerce.viewmodel.ProductViewModel
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 
@@ -26,11 +28,11 @@ class ProductDetailActivity : AppCompatActivity() {
     lateinit var product: Product
     lateinit var productVariants: ProductVariants
 
+    private val productViewModel by viewModels<ProductViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_detail_const)
-
-        val productRepository = ProductRepository(application)
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -40,23 +42,25 @@ class ProductDetailActivity : AppCompatActivity() {
 
         product = intent.getSerializableExtra("PRODUCT") as Product
 
-        productVariants = productRepository.loadProductById(product.id)
-        product = productVariants.product
+        productViewModel.getProductWithVariantes(product.id).observe(this, Observer {
+            productVariants = it
+            product = productVariants.product
 
-        productTitle = findViewById(R.id.toolbar_title)
-        productTitle.text = product.title
+            productTitle = findViewById(R.id.toolbar_title)
+            productTitle.text = product.title
 
-        productPrice = findViewById(R.id.tv_product_price)
-        productPrice.text = "R$ ${product.price}"
+            productPrice = findViewById(R.id.tv_product_price)
+            productPrice.text = "R$ ${product.price}"
 
-        productDesc = findViewById(R.id.tv_product_desc)
-        productDesc.text = product.description
+            productDesc = findViewById(R.id.tv_product_desc)
+            productDesc.text = product.description
 
-        chip_color = findViewById(R.id.chip_group_color)
-        fillColor()
+            chip_color = findViewById(R.id.chip_group_color)
+            fillColor()
 
-        chip_size = findViewById(R.id.chip_group_size)
-        fillSize()
+            chip_size = findViewById(R.id.chip_group_size)
+            fillSize()
+        })
     }
 
     private fun fillColor() {

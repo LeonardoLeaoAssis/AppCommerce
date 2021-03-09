@@ -2,8 +2,6 @@ package br.com.arquitetoandroid.appcommerce.repository
 
 import android.app.Application
 import br.com.arquitetoandroid.appcommerce.database.AppDatabase
-import br.com.arquitetoandroid.appcommerce.model.Product
-import br.com.arquitetoandroid.appcommerce.model.ProductVariants
 
 class ProductRepository(application: Application) {
 
@@ -16,7 +14,7 @@ class ProductRepository(application: Application) {
     val featuredCategories = productCategoryDao.loadAllFeatured()
     val featuredProducts = productDao.loadAllFeatured()
 
-    fun loadProductsByCategory(categoryId: String): List<Product> = productDao.loadAllByCategory(categoryId)
-    fun loadProductById(productId: String): ProductVariants = productDao.loadProductWithVariants(productId)
+    fun loadProductsByCategory(categoryId: String) = productDao.loadAllByCategory(categoryId)
+    fun loadProductById(productId: String) = productDao.loadProductWithVariants(productId)
 
 }

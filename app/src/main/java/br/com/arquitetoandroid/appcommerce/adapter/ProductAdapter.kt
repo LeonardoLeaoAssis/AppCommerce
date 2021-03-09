@@ -13,7 +13,9 @@ import br.com.arquitetoandroid.appcommerce.ProductDetailActivity
 import br.com.arquitetoandroid.appcommerce.R
 import br.com.arquitetoandroid.appcommerce.model.Product
 
-class ProductAdapter(val list: List<Product>, val context: Context): RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
+class ProductAdapter(val context: Context): RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
+
+    var list: List<Product> = emptyList()
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val image: ImageView = itemView.findViewById(R.id.iv_product_image)
