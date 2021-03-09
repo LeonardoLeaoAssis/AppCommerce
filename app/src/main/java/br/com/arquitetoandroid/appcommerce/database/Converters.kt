@@ -1,8 +1,8 @@
 package br.com.arquitetoandroid.appcommerce.database
 
 import androidx.room.TypeConverter
-import br.com.arquitetoandroid.appcommerce.model.Method
-import br.com.arquitetoandroid.appcommerce.model.Status
+import br.com.arquitetoandroid.appcommerce.model.enums.Method
+import br.com.arquitetoandroid.appcommerce.model.enums.Status
 
 class Converters {
 
@@ -18,7 +18,7 @@ class Converters {
     }
 
     @TypeConverter
-    fun toMethod(value: String): Method{
+    fun toMethod(value: String): Method {
         return Method.valueOf(value)
     }
 

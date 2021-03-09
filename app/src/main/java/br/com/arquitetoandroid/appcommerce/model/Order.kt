@@ -2,6 +2,8 @@ package br.com.arquitetoandroid.appcommerce.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import br.com.arquitetoandroid.appcommerce.model.enums.Method
+import br.com.arquitetoandroid.appcommerce.model.enums.Status
 import java.io.Serializable
 import java.util.*
 
@@ -13,4 +15,4 @@ data class Order(
     var status: Status,
     var method: Method,
     var userId: String,
-    var price: Double): Serializable
+    var price: Double = 0.0): Serializable
