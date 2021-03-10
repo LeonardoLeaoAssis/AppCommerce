@@ -105,4 +105,5 @@
     <string name="user_profile_msg_cidade">Preencha o campo cidade.</string>
     <string name="user_profile_msg_cep">Preencha o campo cep.</string>
     <string name="user_profile_msg_senha">Preencha o campo senha.</string>
+    <string name="product_detail_cart_msg">Selecione uma cor e um tamanho.</string>
 </resources>

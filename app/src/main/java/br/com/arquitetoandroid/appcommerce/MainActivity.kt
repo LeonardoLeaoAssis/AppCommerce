@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var imageProfile: ImageView
 
     private val productViewModel by viewModels<ProductViewModel>()
-    private val userViewModel by  viewModels<UserViewModel>()
+    private val userViewModel by viewModels<UserViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
