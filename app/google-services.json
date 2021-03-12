@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "108058419037",
+    "project_id": "appcommerce-leonardo-leao",
+    "storage_bucket": "appcommerce-leonardo-leao.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:108058419037:android:171e8ad191376742add2b4",
+        "android_client_info": {
+          "package_name": "br.com.arquitetoandroid.appcommerce"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "108058419037-095m5c1tqf47uuv5hij2qnqurs55ql44.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD27SnG8VJNxo1Vo2uzNx2gfQZEnmuhdnw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "108058419037-095m5c1tqf47uuv5hij2qnqurs55ql44.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
