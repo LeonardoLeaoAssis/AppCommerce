@@ -9,6 +9,7 @@ import androidx.preference.PreferenceManager
 import br.com.arquitetoandroid.appcommerce.database.AppDatabase
 import br.com.arquitetoandroid.appcommerce.model.User
 import br.com.arquitetoandroid.appcommerce.model.UserAddress
+import br.com.arquitetoandroid.appcommerce.model.UserWithAddress
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
@@ -37,7 +38,7 @@ class UserRepository(val application: Application) {
     private val queue = Volley.newRequestQueue(application)
 
     fun login(email: String, password: String): LiveData<User> {
-        val liveData = MutableLiveData<User>()
+        val liveData = MutableLiveData<User>(null)
 
         val params = JSONObject().also {
             it.put("email", email)
@@ -101,6 +102,32 @@ class UserRepository(val application: Application) {
             })
 
         queue.add(request)
+    }
+
+    fun load(userId: String): LiveData<UserWithAddress> {
+        val userWithAddress = UserWithAddress()
+        val liveData = MutableLiveData<UserWithAddress>(null)
+        val userRef = firestore.collection("user_usr").document(userId)
+
+        userRef.get().addOnSuccessListener {
+            val user = it.toObject(User::class.java)
+            user?.id = it.id
+
+            userWithAddress.user = user!!
+
+            userRef.collection("user_address_usa").get().addOnCompleteListener{ snap ->
+                snap.result?.forEach { doc ->
+                    val address = doc.toObject(UserAddress::class.java)
+                    address.id = doc.id
+
+                    userWithAddress.addresses.add(address)
+                }
+
+                liveData.value = userWithAddress
+            }
+        }
+
+        return liveData
     }
 
     fun loadWithAddresses(userId: String) = userDao.loadUserById(userId)

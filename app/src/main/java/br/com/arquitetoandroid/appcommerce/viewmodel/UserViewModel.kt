@@ -2,8 +2,11 @@ package br.com.arquitetoandroid.appcommerce.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import br.com.arquitetoandroid.appcommerce.model.User
 import br.com.arquitetoandroid.appcommerce.model.UserAddress
+import br.com.arquitetoandroid.appcommerce.model.UserWithAddress
 import br.com.arquitetoandroid.appcommerce.repository.UserRepository
 
 class UserViewModel(application: Application): AndroidViewModel(application) {
@@ -16,6 +19,15 @@ class UserViewModel(application: Application): AndroidViewModel(application) {
     fun createAddress(userAddress: UserAddress) = userRepository.insert(userAddress)
     fun updateAddress(userAddress: UserAddress) = userRepository.update(userAddress)
     fun logout() = userRepository.logout()
-    fun isLogged() = userRepository.loadWithAddresses(userRepository.getUserId()!!)
+
+    fun isLogged(): LiveData<UserWithAddress> {
+        val id = userRepository.getUserId()
+
+        if (id.isNullOrEmpty()) {
+            return MutableLiveData(null)
+        }
+
+        return userRepository.load(id)
+    }
 
 }

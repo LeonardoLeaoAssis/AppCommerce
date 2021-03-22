@@ -3,10 +3,10 @@ package br.com.arquitetoandroid.appcommerce
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import br.com.arquitetoandroid.appcommerce.model.User
 import br.com.arquitetoandroid.appcommerce.viewmodel.UserViewModel
@@ -53,7 +53,11 @@ class UserRegisterActivity : AppCompatActivity() {
 
                 userViewModel.createUser(user)
                 userViewModel.login(user.email, user.password).observe(this, Observer {
-                    finish()
+                    if (it == null) {
+                        Toast.makeText(this, getString(R.string.login_message), Toast.LENGTH_SHORT).show()
+                    } else {
+                        finish()
+                    }
                 })
             }
         }
