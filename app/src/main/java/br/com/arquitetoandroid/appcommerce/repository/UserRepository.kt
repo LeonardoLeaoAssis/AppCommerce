@@ -106,7 +106,7 @@ class UserRepository(val application: Application) {
 
     fun load(userId: String): LiveData<UserWithAddress> {
         val userWithAddress = UserWithAddress()
-        val liveData = MutableLiveData<UserWithAddress>(null)
+        val liveData = MutableLiveData<UserWithAddress>()
         val userRef = firestore.collection("user_usr").document(userId)
 
         userRef.get().addOnSuccessListener {
