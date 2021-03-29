@@ -31,9 +31,6 @@ class UserRepository(val application: Application) {
     }
 
     private val database = AppDatabase.getDatabase(application)
-
-    private val userDao = database.userDao()
-
     private val firestore = FirebaseFirestore.getInstance()
     private val queue = Volley.newRequestQueue(application)
 
@@ -130,11 +127,30 @@ class UserRepository(val application: Application) {
         return liveData
     }
 
-    fun loadWithAddresses(userId: String) = userDao.loadUserById(userId)
-    fun insert(user: User) = userDao.insert(user)
-    fun insert(userAddress: UserAddress) = userDao.insert(userAddress)
-    fun update(user: User) = userDao.update(user)
-    fun update(userAddress: UserAddress) = userDao.update(userAddress)
+    fun update(userWithAddress: UserWithAddress): Boolean {
+        var updated = false
+        val userRef = firestore.collection("user_usr").document(userWithAddress.user.id)
+
+        userRef.set(userWithAddress.user).addOnSuccessListener {
+            updated = true
+        }
+
+        val addressRef = userRef.collection("user_address_usa")
+        val address = userWithAddress.addresses.first()
+
+        if (address.id.isEmpty()) {
+            addressRef.add(address).addOnSuccessListener {
+                address.id = it.id
+                updated = true
+            }
+        } else {
+            addressRef.document(address.id).set(address).addOnSuccessListener {
+                updated = true
+            }
+        }
+
+        return updated
+    }
 
     fun setUserId(userId: String) {
         PreferenceManager.getDefaultSharedPreferences(application).let {

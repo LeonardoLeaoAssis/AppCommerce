@@ -123,8 +123,6 @@ class UserProfileActivity : AppCompatActivity() {
             user.email = userProfileEmail.text.toString()
             user.image = photoURI.toString()
 
-            userViewModel.updateUser(user)
-
             if (addresses.isEmpty()) {
                 val userAddress = UserAddress(
                     addressLine1 =  userAddress1.text.toString(),
@@ -136,7 +134,7 @@ class UserProfileActivity : AppCompatActivity() {
                     userId = user.id
                 )
 
-                userViewModel.createAddress(userAddress)
+                userWithAddress.addresses.add(userAddress)
             } else {
                 addresses.first().apply {
                     addressLine1 =  userAddress1.text.toString()
@@ -145,10 +143,10 @@ class UserProfileActivity : AppCompatActivity() {
                     city = userAddressCity.text.toString()
                     zipCode = userAddressCep.text.toString()
                     state = resources.getStringArray(R.array.states)[userAddressState.selectedItemPosition]
-
-                    userViewModel.updateAddress(this)
                 }
             }
+
+            userViewModel.update(userWithAddress)
         }
 
         Toast.makeText(this, getString(R.string.user_profile_msg_sucesso), Toast.LENGTH_SHORT).show()
