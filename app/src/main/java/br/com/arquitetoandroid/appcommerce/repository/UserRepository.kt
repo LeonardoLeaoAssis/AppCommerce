@@ -6,7 +6,6 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.preference.PreferenceManager
-import br.com.arquitetoandroid.appcommerce.database.AppDatabase
 import br.com.arquitetoandroid.appcommerce.model.User
 import br.com.arquitetoandroid.appcommerce.model.UserAddress
 import br.com.arquitetoandroid.appcommerce.model.UserWithAddress
@@ -30,7 +29,6 @@ class UserRepository(val application: Application) {
         const val KEY = "?key=AIzaSyDQAMjXwmEy3Xg-JB7gCG7_s4CtDO-f5j8"
     }
 
-    private val database = AppDatabase.getDatabase(application)
     private val firestore = FirebaseFirestore.getInstance()
     private val queue = Volley.newRequestQueue(application)
 
@@ -93,6 +91,23 @@ class UserRepository(val application: Application) {
                     .addOnSuccessListener {
                         Toast.makeText(application, "Usuário ${user.email} cadastrado com sucesso.", Toast.LENGTH_SHORT).show()
                     }
+            },
+            { error ->
+                Log.e(TAG, error.message ?: "Error")
+            })
+
+        queue.add(request)
+    }
+
+    fun resetPassword(email: String) {
+        val params = JSONObject().also {
+            it.put("email", email)
+            it.put("requestType", "PASSWORD_RESET")
+        }
+
+        val request = JsonObjectRequest(Request.Method.POST, BASE_URL + PASSWORD_RESET + KEY, params,
+            { response ->
+                Log.e(TAG, response.keys().toString())
             },
             { error ->
                 Log.e(TAG, error.message ?: "Error")

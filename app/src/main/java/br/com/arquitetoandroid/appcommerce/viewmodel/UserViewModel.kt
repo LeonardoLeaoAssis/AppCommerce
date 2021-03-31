@@ -16,6 +16,7 @@ class UserViewModel(application: Application): AndroidViewModel(application) {
     fun login(email: String, password: String) = userRepository.login(email, password)
     fun update(userWithAddress: UserWithAddress) = userRepository.update(userWithAddress)
     fun logout() = userRepository.logout()
+    fun resetPassword(email: String) = userRepository.resetPassword(email)
 
     fun isLogged(): LiveData<UserWithAddress> {
         val id = userRepository.getUserId()
