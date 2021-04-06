@@ -10,10 +10,14 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.arquitetoandroid.appcommerce.adapter.ProductAdapter
+import br.com.arquitetoandroid.appcommerce.databinding.FragmentProductBinding
 import br.com.arquitetoandroid.appcommerce.model.ProductCategory
 import br.com.arquitetoandroid.appcommerce.viewmodel.ProductViewModel
 
 class ProductFragment: Fragment() {
+
+    private var _binding: FragmentProductBinding? = null
+    private val binding get() = _binding!!
 
     lateinit var recyclerProduct: RecyclerView
     lateinit var category: ProductCategory
@@ -29,9 +33,10 @@ class ProductFragment: Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view: View = inflater.inflate(R.layout.fragment_product, container, false)
+        _binding = FragmentProductBinding.inflate(inflater)
+        val view: View = binding.root
 
-        recyclerProduct = view.findViewById(R.id.rv_product)
+        recyclerProduct = binding.rvProduct
 
         val adapterProduct: ProductAdapter = ProductAdapter(requireContext())
 
@@ -44,6 +49,12 @@ class ProductFragment: Fragment() {
         recyclerProduct.layoutManager = GridLayoutManager(requireContext(), 3)
 
         return view
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        _binding = null
     }
 
 }

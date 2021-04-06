@@ -6,30 +6,26 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.ContextThemeWrapper
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import br.com.arquitetoandroid.appcommerce.databinding.ActivityProductDetailConstBinding
 import br.com.arquitetoandroid.appcommerce.model.Product
 import br.com.arquitetoandroid.appcommerce.model.ProductVariants
 import br.com.arquitetoandroid.appcommerce.viewmodel.CartViewModel
 import br.com.arquitetoandroid.appcommerce.viewmodel.ProductViewModel
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import kotlinx.android.synthetic.main.menu_toolbar_layout.view.*
 
 class ProductDetailActivity : AppCompatActivity() {
 
-    lateinit var toolbar: Toolbar
-    lateinit var productTitle: TextView
-    lateinit var productPrice: TextView
-    lateinit var productDesc: TextView
+    private lateinit var binding: ActivityProductDetailConstBinding
+
     lateinit var chip_color: ChipGroup
     lateinit var chip_size: ChipGroup
-    lateinit var btnBuy: Button
 
     lateinit var product: Product
     lateinit var productVariants: ProductVariants
@@ -38,10 +34,11 @@ class ProductDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_product_detail_const)
 
-        toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        binding = ActivityProductDetailConstBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        setSupportActionBar(binding.appBarLayout.toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -52,23 +49,17 @@ class ProductDetailActivity : AppCompatActivity() {
             productVariants = it
             product = productVariants.product
 
-            productTitle = findViewById(R.id.toolbar_title)
-            productTitle.text = product.title
+            binding.appBarLayout.toolbar_title.text = product.title
+            binding.tvProductPrice .text = "R$ ${product.price}"
+            binding.tvProductDesc.text = product.description
 
-            productPrice = findViewById(R.id.tv_product_price)
-            productPrice.text = "R$ ${product.price}"
-
-            productDesc = findViewById(R.id.tv_product_desc)
-            productDesc.text = product.description
-
-            chip_color = findViewById(R.id.chip_group_color)
+            chip_color = binding.chipGroupColor
             fillColor()
 
-            chip_size = findViewById(R.id.chip_group_size)
+            chip_size = binding.chipGroupSize
             fillSize()
 
-            btnBuy = findViewById(R.id.btn_product_buy)
-            btnBuy.setOnClickListener {
+            binding.btnProductBuy.setOnClickListener {
                 addToCart()
             }
         })

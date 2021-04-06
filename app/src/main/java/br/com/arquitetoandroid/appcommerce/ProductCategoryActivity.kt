@@ -1,34 +1,33 @@
 package br.com.arquitetoandroid.appcommerce
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
+import br.com.arquitetoandroid.appcommerce.databinding.ActivityProductCategoryBinding
 import br.com.arquitetoandroid.appcommerce.interfaces.ProductCategoryCallback
 import br.com.arquitetoandroid.appcommerce.model.ProductCategory
+import kotlinx.android.synthetic.main.menu_toolbar_layout.view.*
 
 class ProductCategoryActivity : AppCompatActivity(), ProductCategoryCallback {
 
-    lateinit var toolbar: Toolbar
-    lateinit var textTitle: TextView
+    private lateinit var binding: ActivityProductCategoryBinding
+
     var isTablet: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_product_category)
 
-        toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        binding = ActivityProductCategoryBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        setSupportActionBar(binding.appBarLayout.toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        textTitle = findViewById(R.id.toolbar_title)
-        textTitle.text = getString(R.string.product_category_title)
+        binding.appBarLayout.toolbar_title.text = getString(R.string.product_category_title)
 
-        isTablet = findViewById<View>(R.id.fragment_product) != null
+        isTablet = binding.fragmentProduct != null
     }
 
     override fun onSupportNavigateUp(): Boolean {

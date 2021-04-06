@@ -10,18 +10,23 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.arquitetoandroid.appcommerce.adapter.CartAdapter
+import br.com.arquitetoandroid.appcommerce.databinding.FragmentCartBinding
 import br.com.arquitetoandroid.appcommerce.viewmodel.CartViewModel
 
 class CartFragment: Fragment() {
+
+    private var _binding: FragmentCartBinding? = null
+    private val binding get() = _binding!!
 
     lateinit var recyclerCart: RecyclerView
 
     private val cartViewModel by viewModels<CartViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view: View = inflater.inflate(R.layout.fragment_cart, container, false)
+        _binding = FragmentCartBinding.inflate(inflater, container, false)
+        val view: View = binding.root
 
-        recyclerCart = view.findViewById(R.id.rv_cart)
+        recyclerCart = binding.rvCart
 
         val adapterCart: CartAdapter = CartAdapter(requireContext())
 
@@ -38,6 +43,12 @@ class CartFragment: Fragment() {
 
     interface Callback {
         fun updateCart()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        _binding = null
     }
 
 }

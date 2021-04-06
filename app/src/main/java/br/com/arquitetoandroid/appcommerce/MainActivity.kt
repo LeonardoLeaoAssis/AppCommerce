@@ -20,18 +20,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.arquitetoandroid.appcommerce.adapter.ProductAdapter
 import br.com.arquitetoandroid.appcommerce.adapter.ProductCategoryAdapter
+import br.com.arquitetoandroid.appcommerce.databinding.ActivityMainBinding
 import br.com.arquitetoandroid.appcommerce.interfaces.ProductCategoryCallback
 import br.com.arquitetoandroid.appcommerce.model.ProductCategory
 import br.com.arquitetoandroid.appcommerce.viewmodel.ProductViewModel
 import br.com.arquitetoandroid.appcommerce.viewmodel.UserViewModel
 import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.menu_header_layout.view.*
+import kotlinx.android.synthetic.main.menu_navigation_view.view.*
+import kotlinx.android.synthetic.main.menu_toolbar_layout.view.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, ProductCategoryCallback {
 
-    lateinit var toolbar: Toolbar
-    lateinit var drawerLayout: DrawerLayout
-    lateinit var navigationView: NavigationView
-    lateinit var textTitle: TextView
+    private lateinit var binding: ActivityMainBinding
+
     lateinit var textLogin: TextView
     lateinit var recyclerCategory: RecyclerView
     lateinit var recyclerProduct: RecyclerView
@@ -42,34 +44,32 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        setSupportActionBar(binding.appBarLayout.toolbar)
 
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        textTitle = findViewById(R.id.toolbar_title)
-        textTitle.text = getString(R.string.app_name)
+        binding.appBarLayout.toolbar_title.text = getString(R.string.app_name)
 
-        drawerLayout = findViewById(R.id.nav_drawer_layout)
-        val toogle: ActionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.toogle_open, R.string.toogle_close)
-        drawerLayout.addDrawerListener(toogle)
+        val toogle: ActionBarDrawerToggle = ActionBarDrawerToggle(this, binding.navDrawerLayout, binding.appBarLayout.toolbar, R.string.toogle_open, R.string.toogle_close)
+        binding.navDrawerLayout.addDrawerListener(toogle)
 
         toogle.syncState()
 
-        navigationView = findViewById(R.id.nav_view)
-        navigationView.setNavigationItemSelectedListener(this)
+        binding.navDrawerLayout.nav_view.setNavigationItemSelectedListener(this)
 
-        textLogin = navigationView.getHeaderView(0).findViewById(R.id.header_profile_name)
+        textLogin = binding.navDrawerLayout.nav_view.getHeaderView(0).header_profile_name
         textLogin.setOnClickListener {
             val intent: Intent = Intent(this, UserLoginActivity::class.java)
             startActivity(intent)
         }
 
-        imageProfile = navigationView.getHeaderView(0).findViewById(R.id.header_profile_image)
+        imageProfile = binding.navDrawerLayout.nav_view.getHeaderView(0).header_profile_image
 
-        recyclerCategory = findViewById(R.id.rv_main_product_category)
+        recyclerCategory = binding.rvMainProductCategory
 
         val adapterCategory: ProductCategoryAdapter = ProductCategoryAdapter(this)
 
@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         recyclerCategory.adapter = adapterCategory
         recyclerCategory.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
-        recyclerProduct = findViewById(R.id.rv_main_product)
+        recyclerProduct = binding.rvMainProduct
 
         val adapterProduct: ProductAdapter = ProductAdapter(this)
 
@@ -133,14 +133,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         }
 
-        drawerLayout.closeDrawer(GravityCompat.START)
+        binding.navDrawerLayout.closeDrawer(GravityCompat.START)
 
         return true
     }
 
     override fun onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START)
+        if (binding.navDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.navDrawerLayout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
         }

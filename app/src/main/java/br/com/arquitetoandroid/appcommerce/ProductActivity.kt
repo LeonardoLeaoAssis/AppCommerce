@@ -1,31 +1,27 @@
 package br.com.arquitetoandroid.appcommerce
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import br.com.arquitetoandroid.appcommerce.adapter.ProductCategoryAdapter
+import androidx.appcompat.app.AppCompatActivity
+import br.com.arquitetoandroid.appcommerce.databinding.ActivityProductBinding
 import br.com.arquitetoandroid.appcommerce.model.ProductCategory
+import kotlinx.android.synthetic.main.menu_toolbar_layout.view.*
 
 class ProductActivity : AppCompatActivity() {
 
-    lateinit var toolbar: Toolbar
-    lateinit var textTitle: TextView
+    private lateinit var binding: ActivityProductBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_product)
 
-        toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        binding = ActivityProductBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        setSupportActionBar(binding.appBarLayout.toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        textTitle = findViewById(R.id.toolbar_title)
-        textTitle.text = getString(R.string.product_title)
+        binding.appBarLayout.toolbar_title.text = getString(R.string.product_title)
 
         val category: ProductCategory = intent.getSerializableExtra("CATEGORY") as ProductCategory
         val args = Bundle()

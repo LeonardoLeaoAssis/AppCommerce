@@ -33,7 +33,7 @@ class UserRepository(val application: Application) {
     private val queue = Volley.newRequestQueue(application)
 
     fun login(email: String, password: String): LiveData<User> {
-        val liveData = MutableLiveData<User>(null)
+        val liveData = MutableLiveData<User>()
 
         val params = JSONObject().also {
             it.put("email", email)
@@ -66,6 +66,8 @@ class UserRepository(val application: Application) {
             },
             { error ->
                 Log.e(TAG, error.message ?: "Error")
+
+                liveData.value = null
             })
 
         queue.add(request)

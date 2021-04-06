@@ -1,38 +1,34 @@
 package br.com.arquitetoandroid.appcommerce
 
 import android.os.Bundle
-import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
+import br.com.arquitetoandroid.appcommerce.databinding.ActivityCartBinding
 import br.com.arquitetoandroid.appcommerce.viewmodel.CartViewModel
+import kotlinx.android.synthetic.main.menu_toolbar_layout.view.*
 
 class CartActivity: AppCompatActivity(), CartFragment.Callback {
 
-    lateinit var toolbar: Toolbar
-    lateinit var textTitle: TextView
-    lateinit var cartTotal: TextView
+    private lateinit var binding: ActivityCartBinding
 
     private val cartViewModel by viewModels<CartViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_cart)
 
-        toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        binding = ActivityCartBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        setSupportActionBar(binding.appBarLayout.toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        textTitle = findViewById(R.id.toolbar_title)
-        textTitle.text = getString(R.string.cart_title)
-
-        cartTotal = findViewById(R.id.tv_total)
+        binding.appBarLayout.toolbar_title.text = getString(R.string.cart_title)
 
         cartViewModel.cartPrice.observe(this, Observer {
-            cartTotal.text = "R$ ${it}"
+            binding.tvTotal.text = "R$ ${it}"
         })
 
         val fragment: CartFragment = CartFragment()

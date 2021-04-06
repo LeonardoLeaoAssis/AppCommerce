@@ -11,10 +11,14 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.arquitetoandroid.appcommerce.adapter.OrderAdapter
+import br.com.arquitetoandroid.appcommerce.databinding.FragmentOrderBinding
 import br.com.arquitetoandroid.appcommerce.viewmodel.OrderViewModel
 import br.com.arquitetoandroid.appcommerce.viewmodel.UserViewModel
 
 class OrderFragment: Fragment() {
+
+    private var _binding: FragmentOrderBinding? = null
+    private val binding get() = _binding!!
 
     lateinit var recyclerOrder: RecyclerView
 
@@ -22,9 +26,10 @@ class OrderFragment: Fragment() {
     private val userViewModel by viewModels<UserViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view: View = inflater.inflate(R.layout.fragment_order, container, false)
+        _binding = FragmentOrderBinding.inflate(inflater, container, false)
+        val view: View = binding.root
 
-        recyclerOrder = view.findViewById(R.id.rv_order)
+        recyclerOrder = binding.rvOrder
 
         val adapterOrder: OrderAdapter = OrderAdapter(requireContext())
 
@@ -44,6 +49,12 @@ class OrderFragment: Fragment() {
         recyclerOrder.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
 
         return view
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        _binding = null
     }
 
 }

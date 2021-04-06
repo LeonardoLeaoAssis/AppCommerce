@@ -5,16 +5,21 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.Spinner
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.FileProvider
 import androidx.preference.PreferenceManager
+import br.com.arquitetoandroid.appcommerce.databinding.ActivityUserProfileBinding
 import br.com.arquitetoandroid.appcommerce.model.UserAddress
 import br.com.arquitetoandroid.appcommerce.model.UserWithAddress
 import br.com.arquitetoandroid.appcommerce.viewmodel.UserViewModel
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.android.synthetic.main.menu_toolbar_layout.view.*
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -22,8 +27,9 @@ import java.util.*
 
 class UserProfileActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityUserProfileBinding
+
     lateinit var toolbar: Toolbar
-    lateinit var textTitle: TextView
     lateinit var imageProfile: ImageView
     lateinit var photoURI: Uri
     lateinit var userProfileName: TextInputEditText
@@ -43,29 +49,29 @@ class UserProfileActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_user_profile)
 
-        toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        binding = ActivityUserProfileBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        setSupportActionBar(binding.appBarLayout.toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        textTitle = findViewById(R.id.toolbar_title)
-        textTitle.text = getString(R.string.user_profile_title)
+        binding.appBarLayout.toolbar_title.text = getString(R.string.user_profile_title)
 
-        userProfileName = findViewById(R.id.txt_edit_name)
-        userProfileSurname = findViewById(R.id.txt_edit_surname)
-        userProfileEmail = findViewById(R.id.txt_edit_email)
-        userAddress1 = findViewById(R.id.txt_edit_address)
-        userAddress2 = findViewById(R.id.txt_edit_address2)
-        userAddressNumber = findViewById(R.id.txt_edit_number)
-        userAddressCity = findViewById(R.id.txt_edit_city)
-        userAddressCep = findViewById(R.id.txt_edit_cep)
-        userAddressState = findViewById(R.id.sp_state)
-        btn_user_profile = findViewById(R.id.btn_user_profile)
+        userProfileName = binding.txtEditName
+        userProfileSurname = binding.txtEditSurname
+        userProfileEmail = binding.txtEditEmail
+        userAddress1 = binding.txtEditAddress
+        userAddress2 = binding.txtEditAddress2
+        userAddressNumber = binding.txtEditNumber
+        userAddressCity = binding.txtEditCity
+        userAddressCep = binding.txtEditCep
+        userAddressState = binding.spState
+        btn_user_profile = binding.btnUserProfile
 
-        imageProfile = findViewById(R.id.iv_profile_image)
+        imageProfile = binding.ivProfileImage
         imageProfile.setOnClickListener {
             takePicture()
         }
