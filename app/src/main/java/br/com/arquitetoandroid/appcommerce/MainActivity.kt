@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val adapterCategory: ProductCategoryAdapter = ProductCategoryAdapter(this)
 
-        productViewModel.allCategories.observe(this, Observer {
+        productViewModel.featuredCategories.observe(this, Observer {
             adapterCategory.list = it
             adapterCategory.notifyDataSetChanged()
         })
