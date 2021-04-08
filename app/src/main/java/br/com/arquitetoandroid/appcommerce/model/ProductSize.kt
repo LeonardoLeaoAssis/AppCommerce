@@ -9,11 +9,12 @@ import java.util.*
 @Entity(tableName = "product_size_pds")
 data class ProductSize(
 
-    @PrimaryKey val id: String = UUID.randomUUID().toString(),
+    @PrimaryKey var id: String = UUID.randomUUID().toString(),
     var productId: String,
     val size: String,
     @Ignore var checked: Boolean = false): Serializable {
 
     constructor(id: String, productId: String, size: String): this(id, productId, size, false)
+    @Ignore constructor(): this("", "", "", false)
 
 }
