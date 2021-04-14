@@ -1,6 +1,8 @@
 package br.com.arquitetoandroid.appcommerce.viewmodel
 
 import android.app.Application
+import android.net.Uri
+import android.widget.ImageView
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -17,6 +19,8 @@ class UserViewModel(application: Application): AndroidViewModel(application) {
     fun update(userWithAddress: UserWithAddress) = userRepository.update(userWithAddress)
     fun logout() = userRepository.logout()
     fun resetPassword(email: String) = userRepository.resetPassword(email)
+    fun uploadProfileImage(userId: String, photoUri: Uri) = userRepository.uploadProfileImage(userId, photoUri)
+    fun loadProfileImage(userId: String, imageview: ImageView) = userRepository.loadProfileImage(userId, imageview)
 
     fun isLogged(): LiveData<UserWithAddress> {
         val id = userRepository.getUserId()

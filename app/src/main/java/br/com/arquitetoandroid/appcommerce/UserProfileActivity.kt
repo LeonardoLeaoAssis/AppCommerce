@@ -13,7 +13,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.FileProvider
-import androidx.preference.PreferenceManager
+import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import br.com.arquitetoandroid.appcommerce.databinding.ActivityUserProfileBinding
 import br.com.arquitetoandroid.appcommerce.model.UserAddress
 import br.com.arquitetoandroid.appcommerce.model.UserWithAddress
@@ -31,7 +32,6 @@ class UserProfileActivity : AppCompatActivity() {
 
     lateinit var toolbar: Toolbar
     lateinit var imageProfile: ImageView
-    lateinit var photoURI: Uri
     lateinit var userProfileName: TextInputEditText
     lateinit var userProfileSurname: TextInputEditText
     lateinit var userProfileEmail: TextInputEditText
@@ -44,6 +44,8 @@ class UserProfileActivity : AppCompatActivity() {
     lateinit var btn_user_profile: Button
     lateinit var userWithAddress: UserWithAddress
     val REQUEST_TAKE_PHOTO = 1
+
+    var photoURI: Uri = Uri.EMPTY
 
     private val userViewModel by viewModels<UserViewModel>()
 
@@ -76,16 +78,6 @@ class UserProfileActivity : AppCompatActivity() {
             takePicture()
         }
 
-        val profileImage = PreferenceManager.getDefaultSharedPreferences(this).getString(MediaStore.EXTRA_OUTPUT, null)
-
-        if (profileImage == null) {
-            photoURI = Uri.parse("/")
-            imageProfile.setImageResource(R.drawable.profile_image)
-        } else {
-            photoURI = Uri.parse(profileImage)
-            imageProfile.setImageURI(photoURI)
-        }
-
         btn_user_profile.setOnClickListener {
             update()
         }
@@ -114,6 +106,8 @@ class UserProfileActivity : AppCompatActivity() {
                         }
                     }
                 }
+
+                userViewModel.loadProfileImage(userWithAddress.user.id, imageProfile)
             }
         })
     }
@@ -268,11 +262,11 @@ class UserProfileActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        PreferenceManager.getDefaultSharedPreferences(this).apply {
-            edit().putString(MediaStore.EXTRA_OUTPUT, photoURI.toString()).apply()
-        }
+        userViewModel.uploadProfileImage(userWithAddress.user.id, photoURI).observe(this, Observer {
+            userViewModel.loadProfileImage(userWithAddress.user.id, imageProfile)
 
-        imageProfile.setImageURI(photoURI)
+            photoURI = Uri.parse(it)
+        })
     }
 
 }

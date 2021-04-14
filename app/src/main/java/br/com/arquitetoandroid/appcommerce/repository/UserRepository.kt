@@ -1,18 +1,28 @@
 package br.com.arquitetoandroid.appcommerce.repository
 
 import android.app.Application
+import android.net.Uri
+import android.provider.MediaStore
 import android.util.Log
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.preference.PreferenceManager
+import br.com.arquitetoandroid.appcommerce.R
 import br.com.arquitetoandroid.appcommerce.model.User
 import br.com.arquitetoandroid.appcommerce.model.UserAddress
 import br.com.arquitetoandroid.appcommerce.model.UserWithAddress
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.ktx.app
+import com.google.firebase.storage.ktx.storage
+import kotlinx.android.synthetic.main.activity_user_profile.view.*
 import org.json.JSONObject
 
 class UserRepository(val application: Application) {
@@ -32,8 +42,11 @@ class UserRepository(val application: Application) {
     private val firestore = FirebaseFirestore.getInstance()
     private val queue = Volley.newRequestQueue(application)
 
-    fun login(email: String, password: String): LiveData<User> {
-        val liveData = MutableLiveData<User>()
+    private val glide = Glide.with(application)
+    private val storage = Firebase.storage(Firebase.app)
+
+    fun login(email: String, password: String): MutableLiveData<User?> {
+        val liveData = MutableLiveData<User?>()
 
         val params = JSONObject().also {
             it.put("email", email)
@@ -55,7 +68,7 @@ class UserRepository(val application: Application) {
                         user?.id = localId
                         user?.password = idToken
 
-                        liveData.value = user
+                        liveData.value = user!!
 
                         setUserId(localId)
 
@@ -181,6 +194,30 @@ class UserRepository(val application: Application) {
 
     fun logout() = PreferenceManager.getDefaultSharedPreferences(application).let {
         it.edit().remove(USER_ID).apply()
+    }
+
+    fun uploadProfileImage(userId: String, photoUri: Uri): LiveData<String> {
+        val liveData = MutableLiveData<String>()
+
+        storage.reference.child("users/$userId/profile.jpg").putFile(photoUri).addOnSuccessListener { snap ->
+            PreferenceManager.getDefaultSharedPreferences(application).let {
+                it.edit().putString(MediaStore.EXTRA_OUTPUT, snap.metadata?.path).apply()
+
+                liveData.value = snap.metadata?.path
+            }
+        }
+
+        return liveData
+    }
+
+    fun loadProfileImage(userId: String, imageview: ImageView) {
+        storage.reference.child("users/$userId/profile.jpg").downloadUrl.addOnSuccessListener {
+            glide.load(it)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .error(R.drawable.profile_image)
+                .placeholder(R.drawable.profile_image)
+                .into(imageview)
+        }
     }
 
 }

@@ -1,21 +1,15 @@
 package br.com.arquitetoandroid.appcommerce
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.arquitetoandroid.appcommerce.adapter.ProductAdapter
@@ -155,17 +149,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onResume() {
         super.onResume()
 
-        val profileImage = PreferenceManager.getDefaultSharedPreferences(this).getString(MediaStore.EXTRA_OUTPUT, null)
-
-        if (profileImage == null) {
-            imageProfile.setImageResource(R.drawable.profile_image)
-        } else {
-            imageProfile.setImageURI(Uri.parse(profileImage))
-        }
-
-        userViewModel.isLogged().observe(this, Observer {
-            it?.let {
+        userViewModel.isLogged().observe(this, Observer { user ->
+            user?.let {
                 textLogin.text = "${it.user.name} ${it.user.surname}"
+
+                userViewModel.loadProfileImage(it.user.id, imageProfile)
             }
         })
     }
