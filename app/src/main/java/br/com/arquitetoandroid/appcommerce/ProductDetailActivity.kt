@@ -11,6 +11,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import br.com.arquitetoandroid.appcommerce.adapter.ImageSliderAdapter
 import br.com.arquitetoandroid.appcommerce.databinding.ActivityProductDetailConstBinding
 import br.com.arquitetoandroid.appcommerce.model.Product
 import br.com.arquitetoandroid.appcommerce.model.ProductVariants
@@ -45,9 +46,14 @@ class ProductDetailActivity : AppCompatActivity() {
 
         product = intent.getSerializableExtra("PRODUCT") as Product
 
+        val imageSliderAdapter = ImageSliderAdapter(this)
+
         productViewModel.getProductWithVariantes(product.id).observe(this, Observer {
             productVariants = it
             product = productVariants.product
+
+            imageSliderAdapter.productVariants = productVariants
+            binding.vpImages.adapter = imageSliderAdapter
 
             binding.appBarLayout.toolbar_title.text = product.title
             binding.tvProductPrice .text = "R$ ${product.price}"

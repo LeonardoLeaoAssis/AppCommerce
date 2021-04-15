@@ -1,5 +1,6 @@
 package br.com.arquitetoandroid.appcommerce.adapter
 
+import android.app.Application
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +12,12 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.arquitetoandroid.appcommerce.CartFragment
 import br.com.arquitetoandroid.appcommerce.R
 import br.com.arquitetoandroid.appcommerce.model.OrderedProduct
+import br.com.arquitetoandroid.appcommerce.repository.ProductRepository
 import br.com.arquitetoandroid.appcommerce.viewmodel.CartViewModel
 
 class CartAdapter(val context: Context): RecyclerView.Adapter<CartAdapter.ViewHolder>() {
+
+    private val productRepository = ProductRepository(context.applicationContext as Application)
 
     var list: MutableList<OrderedProduct> = mutableListOf()
 
@@ -66,6 +70,8 @@ class CartAdapter(val context: Context): RecyclerView.Adapter<CartAdapter.ViewHo
             (context as CartFragment.Callback).updateCart()
             notifyDataSetChanged()
         }
+
+        productRepository.loadThumbnail(orderProduct.product, holder.image)
 
         updatePrice(holder, orderProduct)
     }

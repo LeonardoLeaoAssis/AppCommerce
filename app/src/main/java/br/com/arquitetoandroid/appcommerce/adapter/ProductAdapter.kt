@@ -1,5 +1,6 @@
 package br.com.arquitetoandroid.appcommerce.adapter
 
+import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -12,8 +13,11 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.arquitetoandroid.appcommerce.ProductDetailActivity
 import br.com.arquitetoandroid.appcommerce.R
 import br.com.arquitetoandroid.appcommerce.model.Product
+import br.com.arquitetoandroid.appcommerce.repository.ProductRepository
 
 class ProductAdapter(val context: Context): RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
+
+    private val productRepository = ProductRepository(context.applicationContext as Application)
 
     var list: List<Product> = emptyList()
 
@@ -40,6 +44,8 @@ class ProductAdapter(val context: Context): RecyclerView.Adapter<ProductAdapter.
             intent.putExtra("PRODUCT", product)
             context.startActivity(intent)
         }
+
+        productRepository.loadThumbnail(product, holder.image)
     }
 
 }
