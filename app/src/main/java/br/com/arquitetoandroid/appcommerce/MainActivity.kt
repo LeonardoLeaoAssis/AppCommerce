@@ -17,6 +17,7 @@ import br.com.arquitetoandroid.appcommerce.adapter.ProductCategoryAdapter
 import br.com.arquitetoandroid.appcommerce.databinding.ActivityMainBinding
 import br.com.arquitetoandroid.appcommerce.interfaces.ProductCategoryCallback
 import br.com.arquitetoandroid.appcommerce.model.ProductCategory
+import br.com.arquitetoandroid.appcommerce.viewmodel.HomeBannerViewModel
 import br.com.arquitetoandroid.appcommerce.viewmodel.ProductViewModel
 import br.com.arquitetoandroid.appcommerce.viewmodel.UserViewModel
 import com.google.android.material.navigation.NavigationView
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private val productViewModel by viewModels<ProductViewModel>()
     private val userViewModel by viewModels<UserViewModel>()
+    private val homeBannerViewModel by viewModels<HomeBannerViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +49,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         binding.appBarLayout.toolbar_title.text = getString(R.string.app_name)
+
+        homeBannerViewModel.load(binding.ivSliderImg).observe(this, Observer {
+            binding.tvSliderTitle.text = it.title
+            binding.tvSliderSubtitle.text = it.subtitle
+        })
 
         val toogle: ActionBarDrawerToggle = ActionBarDrawerToggle(this, binding.navDrawerLayout, binding.appBarLayout.toolbar, R.string.toogle_open, R.string.toogle_close)
         binding.navDrawerLayout.addDrawerListener(toogle)
