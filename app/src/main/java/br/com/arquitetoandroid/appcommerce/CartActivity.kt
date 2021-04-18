@@ -51,11 +51,6 @@ class CartActivity: AppCompatActivity(), CartFragment.Callback {
         cartViewModel.cartPrice.observe(this, Observer {
             binding.tvTotal.text = "R$ ${it}"
         })
-
-        val fragment: CartFragment = CartFragment()
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_cart, fragment)
-            .commit()
     }
 
     override fun onSupportNavigateUp(): Boolean {

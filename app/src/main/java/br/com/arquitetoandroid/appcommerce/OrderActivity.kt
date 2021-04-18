@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import br.com.arquitetoandroid.appcommerce.databinding.ActivityOrderBinding
 import br.com.arquitetoandroid.appcommerce.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.menu_toolbar_layout.view.*
@@ -35,13 +36,15 @@ class OrderActivity: AppCompatActivity() {
             } else {
                 val arguments = Bundle()
                 arguments.putSerializable("USER", it.user)
+//
+//                val fragment = OrderFragment()
+//                fragment.arguments = arguments
+//
+//                supportFragmentManager.beginTransaction()
+//                    .replace(R.id.fragment_order, fragment)
+//                    .commit()
 
-                val fragment = OrderFragment()
-                fragment.arguments = arguments
-
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_order, fragment)
-                    .commit()
+                binding.navHostFragment.findNavController().setGraph(R.navigation.nav_graph_order, arguments)
             }
         })
     }

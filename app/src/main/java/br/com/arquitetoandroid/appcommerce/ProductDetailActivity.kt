@@ -19,6 +19,7 @@ import br.com.arquitetoandroid.appcommerce.viewmodel.CartViewModel
 import br.com.arquitetoandroid.appcommerce.viewmodel.ProductViewModel
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.menu_toolbar_layout.view.*
 
 class ProductDetailActivity : AppCompatActivity() {
@@ -54,6 +55,9 @@ class ProductDetailActivity : AppCompatActivity() {
 
             imageSliderAdapter.productVariants = productVariants
             binding.vpImages.adapter = imageSliderAdapter
+            imageSliderAdapter.notifyDataSetChanged()
+
+            TabLayoutMediator(binding.tabLayout, binding.vpImages) { tab, position -> }.attach()
 
             binding.appBarLayout.toolbar_title.text = product.title
             binding.tvProductPrice .text = "R$ ${product.price}"
