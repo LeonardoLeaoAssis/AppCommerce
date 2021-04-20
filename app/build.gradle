@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "br.com.arquitetoandroid.appcommerce"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -97,4 +97,7 @@ dependencies {
 
     // Feature module Support
     implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
+
+    //Mercado Pago
+    implementation 'com.mercadopago.android.px:checkout:4.+'
 }
