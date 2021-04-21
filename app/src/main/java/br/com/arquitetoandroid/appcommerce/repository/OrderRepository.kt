@@ -23,6 +23,7 @@ class OrderRepository(application: Application) {
 
     companion object {
         private val TAG = OrderRepository::class.java.simpleName
+
         private const val BASE_URL = "https://api.mercadopago.com/checkout/preferences"
         private const val TOKEN = "?access_token=TEST-8076706258009250-042011-4ba076a05aa45d561a5cab66cf016b85-187614068"
     }
@@ -57,7 +58,7 @@ class OrderRepository(application: Application) {
                     item.put("category_id", product.product.categoryId)
                     item.put("title", "${product.product.title} (${product.size}, ${product.color})")
                     item.put("quantity", product.quantity)
-                    item.put("unity_price", product.product.price)
+                    item.put("unit_price", product.product.price)
 
                     items.put(item)
                 }
